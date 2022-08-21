@@ -7,6 +7,9 @@ class Chart extends StatefulWidget {
   final double maxData;
   final double? minY;
   final double? maxY;
+  final double paddingTop;
+  final double thickness;
+  final List<Color> gradientColors;
 
   const Chart({
     Key? key,
@@ -15,6 +18,12 @@ class Chart extends StatefulWidget {
     required this.maxData,
     this.minY,
     this.maxY,
+    this.paddingTop = 100,
+    this.thickness = 3,
+    this.gradientColors = const [
+      Color(0xFFFFFFFF),
+      Color(0x00FFFFFF),
+    ],
   }) : super(key: key);
 
   @override
@@ -23,6 +32,7 @@ class Chart extends StatefulWidget {
 
 class _ChartState extends State<Chart> {
   var dataAnimated = [];
+
   @override
   void initState() {
     dataAnimated = List.filled(widget.data.length, widget.minData);
@@ -38,7 +48,7 @@ class _ChartState extends State<Chart> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 100),
+      padding: EdgeInsets.only(top: widget.paddingTop),
       child: LineChart(
         swapAnimationCurve: Curves.easeInOut,
         swapAnimationDuration: const Duration(milliseconds: 400),
@@ -66,7 +76,7 @@ class _ChartState extends State<Chart> {
                   FlSpot(i.toDouble(), dataAnimated[i])
               ],
               isCurved: true,
-              barWidth: 3,
+              barWidth: widget.thickness,
               isStrokeCapRound: true,
               gradient: const LinearGradient(
                 begin: Alignment.centerLeft,
@@ -79,13 +89,10 @@ class _ChartState extends State<Chart> {
               dotData: FlDotData(show: false),
               belowBarData: BarAreaData(
                 show: true,
-                gradient: const LinearGradient(
+                gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
-                  colors: [
-                    Color(0xFFFFFFFF),
-                    Color(0x00FFFFFF),
-                  ],
+                  colors: widget.gradientColors,
                 ),
               ),
             ),
