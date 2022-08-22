@@ -1,5 +1,7 @@
+import 'package:crypto_trading_ui/utils/constants.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class Chart extends StatefulWidget {
   final List<double> data;
@@ -10,6 +12,11 @@ class Chart extends StatefulWidget {
   final double paddingTop;
   final double thickness;
   final List<Color> gradientColors;
+  final double? initialData;
+  final double? interval;
+  final List<String> horizontalLines;
+  final String format;
+  final bool showTouchTooltip;
 
   const Chart({
     Key? key,
@@ -24,6 +31,11 @@ class Chart extends StatefulWidget {
       Color(0xFFFFFFFF),
       Color(0x00FFFFFF),
     ],
+    this.initialData,
+    this.interval,
+    this.horizontalLines = const [],
+    this.format = '',
+    this.showTouchTooltip = false,
   }) : super(key: key);
 
   @override
@@ -35,7 +47,8 @@ class _ChartState extends State<Chart> {
 
   @override
   void initState() {
-    dataAnimated = List.filled(widget.data.length, widget.minData);
+    dataAnimated =
+        List.filled(widget.data.length, widget.initialData ?? widget.minData);
 
     Future.delayed(const Duration(milliseconds: 200)).then((_) {
       setState(() {
@@ -58,13 +71,58 @@ class _ChartState extends State<Chart> {
           minY: widget.minY ?? widget.minData,
           maxY: widget.maxY ?? widget.maxData,
           titlesData: FlTitlesData(
-            show: false,
+            leftTitles: AxisTitles(
+              sideTitles: SideTitles(showTitles: false),
+            ),
+            topTitles: AxisTitles(
+              sideTitles: SideTitles(showTitles: false),
+            ),
+            bottomTitles: AxisTitles(
+              sideTitles: SideTitles(showTitles: false),
+            ),
+            rightTitles: AxisTitles(
+              sideTitles: SideTitles(
+                  showTitles: widget.horizontalLines.isNotEmpty,
+                  reservedSize: NumberFormat(widget.format)
+                          .format(widget.minData)
+                          .length *
+                      11.0,
+                  interval: widget.interval,
+                  getTitlesWidget: (value, meta) {
+                    String title = widget.horizontalLines
+                            .contains(value.toStringAsFixed(4))
+                        ? NumberFormat(widget.format).format(value)
+                        : '';
+                    return SideTitleWidget(
+                      axisSide: meta.axisSide,
+                      child: Text(title),
+                    );
+                  }),
+            ),
           ),
           lineTouchData: LineTouchData(
-            enabled: false,
+            enabled: widget.showTouchTooltip,
+            touchTooltipData: LineTouchTooltipData(
+              tooltipBgColor: kPrimaryColor,
+              getTooltipItems: (touchedSpots) => touchedSpots
+                  .map(
+                    (spot) => LineTooltipItem(
+                      '${NumberFormat.simpleCurrency().format(spot.y)}\n'
+                      '${spot.x.toInt()}:00',
+                      const TextStyle(),
+                    ),
+                  )
+                  .toList(),
+            ),
           ),
           gridData: FlGridData(
-            show: false,
+            drawVerticalLine: false,
+            drawHorizontalLine: widget.interval != null,
+            horizontalInterval: widget.interval,
+            getDrawingHorizontalLine: (_) => FlLine(
+              color: kSecondaryTextColor,
+              strokeWidth: 0.5,
+            ),
           ),
           borderData: FlBorderData(
             show: false,

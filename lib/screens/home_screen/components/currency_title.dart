@@ -1,5 +1,6 @@
-import 'package:crypto_trading_ui/utils/constants.dart';
 import 'package:flutter/material.dart';
+
+import '../../../utils/constants.dart';
 
 class CurrencyTitle extends StatelessWidget {
   final String code;

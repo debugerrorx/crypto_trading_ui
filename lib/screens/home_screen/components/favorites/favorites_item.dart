@@ -1,9 +1,10 @@
-import 'package:crypto_trading_ui/components/custom_icon.dart';
-import 'package:crypto_trading_ui/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import '../../../../components/custom_icon.dart';
 import '../../../../models/currency.dart';
+import '../../../../utils/constants.dart';
+import '../../../currency_details_screen/currency_details_screen.dart';
 
 class FavoritesItem extends StatelessWidget {
   final Currency currency;
@@ -84,6 +85,16 @@ class FavoritesItem extends StatelessWidget {
                   const Spacer(),
                   price(),
                 ],
+              ),
+            ),
+            Material(
+              color: Colors.transparent,
+              child: InkWell(
+                onTap: () => Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => CurrencyDetailsScreen(currency: currency),
+                  ),
+                ),
               ),
             ),
           ],

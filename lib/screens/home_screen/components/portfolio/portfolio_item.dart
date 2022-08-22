@@ -1,13 +1,14 @@
-import 'package:crypto_trading_ui/components/chart.dart';
+import 'dart:math' as math;
+
+import 'package:crypto_trading_ui/screens/currency_details_screen/currency_details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import '../../../../components/chart.dart';
 import '../../../../components/custom_icon.dart';
 import '../../../../models/currency.dart';
 import '../../../../utils/constants.dart';
 import '../currency_title.dart';
-
-import 'dart:math' as math;
 
 class PortfolioItem extends StatelessWidget {
   final Currency currency;
@@ -97,6 +98,16 @@ class PortfolioItem extends StatelessWidget {
               right: 20,
               bottom: 20,
               child: currentAmount(),
+            ),
+            Material(
+              color: Colors.transparent,
+              child: InkWell(
+                onTap: () => Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => CurrencyDetailsScreen(currency: currency),
+                  ),
+                ),
+              ),
             ),
           ],
         ),
