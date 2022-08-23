@@ -2,23 +2,15 @@
 
 This project is all about designing a Crypto Trading App with a modern UI using the latest features offered by Flutter. In a total of three parts, we will create a unique home screen containing all the necessary information on one page, use the package fl_chart to visualize our cryptocurrency price data, and animate the charts for a satisfying user experience.
 
-<br>
-
 ---
 
-<br>
+☕️ Creating these videos requires a lot of time and effort. If you enjoy my content you can buy me a coffee so I can produce more videos during the night:
 
-If you like this kind of content, you can leave a donation here:
+[**Support DebugErrorX**](https://www.buymeacoffee.com/debugerrorx)
 
-[**Donate to DebugErrorX**](https://bit.ly/DebugErrorXDonations)
-
-This way I'm able to continue producing high quality videos for you.
-
-<br>
+Thank you!
 
 ---
-
-<br>
 
 ## [Watch it on YouTube](https://youtube.com/playlist?list=PLz3ulyTHbIEfVTYwj_zvAxKvfxIrW8aj9)
 
@@ -26,11 +18,7 @@ This way I'm able to continue producing high quality videos for you.
 
 ![Crypto Trading UI](thumbnail.png)
 
-<br>
-
 ---
-
-<br>
 
 You want more Flutter content? Check out my YouTube channel [**DebugErrorX**](https://www.youtube.com/channel/UCtY6vtwLqivmnquY1fg-BkQ)
 - [Recent Flutter Videos](https://www.youtube.com/channel/UCtY6vtwLqivmnquY1fg-BkQ/videos)
